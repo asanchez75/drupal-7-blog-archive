@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function custom_blog_archive_block_info()
+{
+    $blocks                        = array();
+    $blocks['custom_blog_archive'] = array(
+        'info' => t('Blog archive')
+    );
+    
+    return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function custom_blog_archive_block_view($delta = '')
+{
+    $block = array();
+    
+    switch ($delta) {
+        case 'custom_blog_archive':
+            $block['subject'] = t('Blog archive');
+            $block['content'] = custom_blog_archive_view();
+            break;
+    }
+    
+    return $block;
+}
+
+/**
+ * Custom function constructs block
+ */
+function custom_blog_archive_view()
+{
+    $type  = "article";
+    
+    $query = new EntityFieldQuery();
+$query->entityCondition('entity_type', 'node')
+  ->propertyCondition('status', 1)
+  ->propertyCondition('type', array($type))
+  ->propertyOrderBy('created', 'DESC')
+  ->range(0, 9999);
+$result = $query->execute();
+$nodes = node_load_multiple(array_keys($result['node'])); 
+    
+    $possible_years  = array();
+    $possible_months = array();
+    $archive         = array();
+    
+    foreach ($nodes as $node) {
+        $title   = $node->title;
+        $created = $node->created;
+        $path    = url('node/' . $node->nid);
+        $year    = date("Y", $created);
+        $month   = date("F", $created);
+        
+        if (in_array($year, $possible_years) == FALSE) {
+            $possible_years[] = $year;
+        }
+        
+        if (in_array($month, $possible_months) == FALSE) {
+            $possible_months[] = $month;
+        }
+        
+        $archive[$year][$month][] = array(
+            'title' => $title,
+            'path' => $path
+        );
+    }
+   
+    
+    $html = '<ul class="years">';
+    foreach ($archive as $key => $value) {
+        if (in_array($key, $possible_years) == TRUE) {
+            $html .= '<li class="year"><span class="clicker">' . $key . '</span>';
+            $html .= '<ul class="months">';
+        }
+        if (is_array($value) == TRUE) {
+            foreach ($value as $key => $value) {
+                if (in_array($key, $possible_months) == TRUE) {
+                    $html .= '<li class="month"><span class="clicker">' . $key . '</span>';
+                    $html .= '<ul class="items">';
+                }
+                if (is_array($value) == TRUE) {
+                    foreach ($value as $key => $value) {
+                        if (is_array($value) == TRUE) {
+                        	$html .= '<li class="item">';
+                        	$html .= '<a href="'.$value['path'].'">'.$value['title'].'</a>';
+                        	$html .= '</li>';
+                        }
+                    }
+                }
+                $html .= '</ul></li>';
+            }
+        }
+        $html .= '</ul></li>';
+    }
+    
+    $block = $html;
+    
+    // drupal_set_message('<pre>' . print $block . '</pre>');
+    
+    return $block;
+}
