@@ -35,14 +35,16 @@ function custom_blog_archive_block_view($delta = '')
  */
 function custom_blog_archive_view()
 {
-    $type = "article";
+    $type  = "article";
     
     $query = new EntityFieldQuery();
-    $query->entityCondition('entity_type', 'node')->propertyCondition('status', 1)->propertyCondition('type', array(
-        $type
-    ))->propertyOrderBy('created', 'DESC')->range(0, 9999);
-    $result = $query->execute();
-    $nodes  = node_load_multiple(array_keys($result['node']));
+$query->entityCondition('entity_type', 'node')
+  ->propertyCondition('status', 1)
+  ->propertyCondition('type', array($type))
+  ->propertyOrderBy('created', 'DESC')
+  ->range(0, 9999);
+$result = $query->execute();
+$nodes = node_load_multiple(array_keys($result['node'])); 
     
     $possible_years  = array();
     $possible_months = array();
@@ -68,7 +70,7 @@ function custom_blog_archive_view()
             'path' => $path
         );
     }
-    
+   
     
     $html = '<ul class="years">';
     foreach ($archive as $key => $value) {
@@ -85,9 +87,9 @@ function custom_blog_archive_view()
                 if (is_array($value) == TRUE) {
                     foreach ($value as $key => $value) {
                         if (is_array($value) == TRUE) {
-                            $html .= '<li class="item">';
-                            $html .= '<a href="' . $value['path'] . '">' . $value['title'] . '</a>';
-                            $html .= '</li>';
+                        	$html .= '<li class="item">';
+                        	$html .= '<a href="'.$value['path'].'">'.$value['title'].'</a>';
+                        	$html .= '</li>';
                         }
                     }
                 }
@@ -98,6 +100,8 @@ function custom_blog_archive_view()
     }
     
     $block = $html;
+    
+    // drupal_set_message('<pre>' . print $block . '</pre>');
     
     return $block;
 }
