@@ -1,3 +1,7 @@
 name = Custom blog archive
 description = Provides a block with custom archive of nodes by node type, summarised by date
 core = 7.x
+scripts[] = custom_blog_archive.js
+stylesheets[all][] = custom_blog_archive.css
+
+

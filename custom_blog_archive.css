@@ -1,4 +1,5 @@
 /* custom archive block */
+
 #block-custom-blog-archive-custom-blog-archive .clicker{
 cursor: pointer;
 }
@@ -12,7 +13,8 @@ list-style: none;
 margin-left: 0.5em;
 }
 
-#block-custom-blog-archive-custom-blog-archive ul.items{
+#block-custom-blog-archive-custom-blog-archive ul.items,
+#block-custom-blog-archive-custom-blog-archive ul.months {
 display: none;
 }
 
