@@ -1,23 +1,36 @@
 /* custom archive block */
 
 #block-custom-blog-archive-custom-blog-archive .clicker{
-cursor: pointer;
+  cursor: pointer;
 }
 
 #block-custom-blog-archive-custom-blog-archive ul.years,
 #block-custom-blog-archive-custom-blog-archive ul.months{
-list-style: none;
+  list-style: none;
 }
 
 #block-custom-blog-archive-custom-blog-archive ul.months{
-margin-left: 0.5em;
+  margin-left: 0.5em;
 }
 
 #block-custom-blog-archive-custom-blog-archive ul.items,
 #block-custom-blog-archive-custom-blog-archive ul.months {
-display: none;
+  display: none;
 }
 
 #block-custom-blog-archive-custom-blog-archive li.year:first-child li.month:first-child ul.items{
-display: block; /* show the first month's nodes by default */
+  display: block; /* show the first month's nodes by default */
 }
+
+#block-custom-blog-archive-custom-blog-archive .years {
+  margin-left: 10px;
+}
+
+#block-custom-blog-archive-custom-blog-archive .month,
+#block-custom-blog-archive-custom-blog-archive .item,
+#block-custom-blog-archive-custom-blog-archive .year {
+  list-style-type: circle;
+  margin-left: 10px;
+}
+
+
