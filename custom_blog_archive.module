@@ -70,7 +70,7 @@ function custom_blog_archive_view()
     }
 
 
-    $html = '<ul class="years">';
+    $html = '<div class="item-list"><ul class="years">';
     foreach ($archive as $key => $value) {
         if (in_array($key, $possible_years) == TRUE) {
             $html .= '<li class="year"><span class="clicker">' . $key . '</span>';
@@ -97,7 +97,7 @@ function custom_blog_archive_view()
         $html .= '</ul></li>';
     }
 
-    $block = $html;
+    $block = $html . '</div>';
 
     return $block;
 }
